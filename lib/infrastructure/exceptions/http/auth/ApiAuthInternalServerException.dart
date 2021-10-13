@@ -1,0 +1,1 @@
+class ApiAuthInternalServerException implements Exception {}

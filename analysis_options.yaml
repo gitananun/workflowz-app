@@ -1,0 +1,130 @@
+include: lint_rules.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    # This is generated from the i18n vscode extension
+    - "**/i18n.dart"
+
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+
+  errors:
+    # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
+    # We explicitly enabled even conflicting rules and are fixing the conflict
+    # in this file
+    included_file_warning: ignore
+
+    # Causes false positives (https://github.com/dart-lang/sdk/issues/41571
+    top_level_function_literal_block: ignore
+
+linter:
+  rules:
+    # Personal preference. I don't find it more readable
+    cascade_invocations: false
+
+    # Conflicts with `prefer_single_quotes`
+    # Single quotes are easier to type and don't compromise on readability.
+    prefer_double_quotes: false
+
+    # Conflicts with `omit_local_variable_types` and other rules.
+    # As per Dart guidelines, we want to avoid unnecessary types to make the code
+    # more readable.
+    # See https://dart.dev/guides/language/effective-dart/design#avoid-type-annotating-initialized-local-variables
+    always_specify_types: false
+
+    # Incompatible with `prefer_final_locals`
+    # Having immutable local variables makes larger functions more predictible
+    # so we will use `prefer_final_locals` instead.
+    unnecessary_final: false
+
+    # Not quite suitable for Flutter, which may have a `build` method with a single
+    # return, but that return is still complex enough that a "body" is worth it.
+    prefer_expression_function_bodies: false
+
+    # Conflicts with the convention used by flutter, which puts `Key key`
+    # and `@required Widget child` last.
+    always_put_required_named_parameters_first: false
+
+    # `as` is not that bad (especially with the upcoming non-nullable types).
+    # Explicit exceptions is better than implicit exceptions.
+    avoid_as: false
+
+    # This project doesn't use Flutter-style todos
+    flutter_style_todos: false
+
+    #
+    lowerCamelCase: false
+
+    # There are situations where we voluntarily want to catch everything,
+    # especially as a library.
+    avoid_catches_without_on_clauses: false
+
+    # Boring as it sometimes force a line of 81 characters to be split in two.
+    # As long as we try to respect that 80 characters limit, going slightly
+    # above is fine.
+    lines_longer_than_80_chars: false
+
+    # Conflicts with disabling `implicit-dynamic`
+    avoid_annotating_with_dynamic: false
+
+    # Not nessecary for an application and more pointed towards public API's
+    public_member_api_docs: false
+
+    # Temporarly
+    diagnostic_describe_all_properties: false
+
+    # I think it's easier to read if they are grouped together
+    sort_pub_dependencies: false
+
+    # When mixing relative and absolute imports it's possible to create confusion where the same member gets imported in two different ways.
+    # An easy way to avoid that is to ensure you have no relative imports that include lib/ in their paths.
+    prefer_relative_imports: false
+
+    # It is preferable to orginze all of the static values inside a single class (e.g. styles)
+    avoid_classes_with_only_static_members: false
+
+    # Makes easier to read and function
+    avoid_types_on_closure_parameters: false
+
+    # Dart does not have two possible type declarations for the same object
+    implicit_dynamic_map_literal: false
+
+    # If TRUE, it will block to create a simple data inside the widget
+    avoid_field_initializers_in_const_classes: false
+
+    # Helps to have cleaner ui inside the build method mainly.
+    # Local variables such as private properties in classes, we use only inside the same block functions.
+    # So, simple dynamic type feature of Dart is enough
+
+    # It is just convenient to clearly see that the value is a constant one
+    constant_identifier_names: false
+
+    # Outside of lib folder there are always widgets that must have the same naming conventions for me
+    lowercase_with_underscores: false
+
+    # Not Convenient for Domain Related Filenames
+    file_names: false
+
+    one_member_abstracts: false
+
+    prefer_const_constructors: false
+
+    always_put_control_body_on_new_line: false
+
+    # In some cases it is comfortable to write on a single line
+    curly_braces_in_flow_control_structures: false
+
+    # With the help of equatable, it will be easy to compare two classes with each other
+    avoid_implementing_value_types: false
+
+    # in BloC classes, it is more visual to see the properties first
+    sort_constructors_first: false
+
+    avoid_print: false
+
+    avoid_function_literals_in_foreach_calls: false
+
+    avoid_bool_literals_in_conditional_expressions: false

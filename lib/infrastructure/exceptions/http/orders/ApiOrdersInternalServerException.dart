@@ -1,0 +1,1 @@
+class ApiOrdersInternalServerException implements Exception {}
